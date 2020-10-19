@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id = "@+id/bottomNavigation_Friend"
+        android:icon = "@drawable/friends_icon"
+        android:title = "Friend"
+        app:showAsAction="always" />
+    <item
+        android:id = "@+id/bottomNavigation_Promise"
+        android:icon = "@drawable/promise_icon"
+        android:title = "Promise"
+        app:showAsAction="always" />
+    <item
+        android:id = "@+id/bottomNavigation_MyInformation"
+        android:icon = "@drawable/myinfo_icon"
+        android:title = "MyInfo"
+        app:showAsAction="always" />
+</menu>

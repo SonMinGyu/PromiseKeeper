@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "148019060183",
+    "firebase_url": "https://promisekeeper-887ac.firebaseio.com",
+    "project_id": "promisekeeper-887ac",
+    "storage_bucket": "promisekeeper-887ac.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:148019060183:android:9c0ad3397a1f4b59343f92",
+        "android_client_info": {
+          "package_name": "org.application.promisekeeper"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "148019060183-hff8spav3ljm5rmqpcj86acme1d12g37.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDp46pBrp2M-h1R4Q_nJfAQcP8cVUG9_Hw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "148019060183-hff8spav3ljm5rmqpcj86acme1d12g37.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

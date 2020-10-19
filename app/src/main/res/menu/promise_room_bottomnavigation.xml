@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id = "@+id/promise_room_bottomnavigation_selectPlace"
+        android:icon = "@drawable/place_icon"
+        android:title = "Find Place"
+        app:showAsAction="always" />
+    <item
+        android:id = "@+id/promise_room_bottomnavigation_chat"
+        android:icon = "@drawable/chat_icon"
+        android:title = "Chat"
+        app:showAsAction="always" />
+</menu>

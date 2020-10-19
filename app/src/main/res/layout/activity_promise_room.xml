@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainFragment">
+
+    <FrameLayout
+        android:id="@+id/promise_room_framLayout"
+        android:layout_width="match_parent"
+        android:layout_height="620dp"
+        android:layout_above="@+id/mainFragment_bottomNavigation"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="55dp"
+        android:layout_marginRight="0dp" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/promise_room_bottomNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:itemBackground="@color/colorPrimary"
+        app:itemIconTint="@drawable/bottomnavigationitemcolor"
+        app:itemTextColor="@drawable/bottomnavigationtintcolor"
+        app:layout_behavior="tech.thev.app.view.BottomNavigationBehavior"
+        app:menu="@menu/promise_room_bottomnavigation" />
+
+    <TextView
+        android:id="@+id/promise_room_titleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="18dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="18dp"
+        android:gravity="center_vertical"
+        android:text="TextView"
+        android:textSize="20sp" />
+
+</RelativeLayout>

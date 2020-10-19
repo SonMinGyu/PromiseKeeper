@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name = "Hour">
+        <item>Hour</item>
+        <item>00 시</item>
+        <item>01 시</item>
+        <item>02 시</item>
+        <item>03 시</item>
+        <item>04 시</item>
+        <item>05 시</item>
+        <item>06 시</item>
+        <item>07 시</item>
+        <item>08 시</item>
+        <item>09 시</item>
+        <item>10 시</item>
+        <item>11 시</item>
+        <item>12 시</item>
+        <item>13 시</item>
+        <item>14 시</item>
+        <item>15 시</item>
+        <item>16 시</item>
+        <item>17 시</item>
+        <item>18 시</item>
+        <item>19 시</item>
+        <item>20 시</item>
+        <item>21 시</item>
+        <item>22 시</item>
+        <item>23 시</item>
+        <item>24 시</item>
+    </string-array>
+</resources>

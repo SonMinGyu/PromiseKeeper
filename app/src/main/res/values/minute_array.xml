@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name = "Minute">
+        <item>Minute</item>
+        <item>00 분</item>
+        <item>10 분</item>
+        <item>20 분</item>
+        <item>30 분</item>
+        <item>40 분</item>
+        <item>50 분</item>
+    </string-array>
+</resources>
