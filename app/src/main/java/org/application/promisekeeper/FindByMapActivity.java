@@ -99,7 +99,7 @@ public class FindByMapActivity extends AppCompatActivity
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
                 WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_find_by_map);
 
         linearLayout = (LinearLayout) findViewById(R.id.find_by_map_mainLayout);
         mLayout = findViewById(R.id.find_by_map_mainLayout);
@@ -116,7 +116,7 @@ public class FindByMapActivity extends AppCompatActivity
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.main_map);
+                .findFragmentById(R.id.find_by_map_fragment);
         mapFragment.getMapAsync(this);
     }
 
@@ -194,7 +194,6 @@ public class FindByMapActivity extends AppCompatActivity
                         taskMap.put("promisePlaceLatitude", latLng.latitude);
                         taskMap.put("promisePlaceLongitude", latLng.longitude);
                         FirebaseDatabase.getInstance().getReference().child("promise")
-                                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                 .child(getIntent().getExtras().getString("promiseKey")).updateChildren(taskMap);
 
                         Toast.makeText(getApplicationContext(), "약속 장소가 설정되었습니다!", Toast.LENGTH_SHORT).show();

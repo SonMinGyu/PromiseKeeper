@@ -227,6 +227,11 @@ public class MainFragment extends AppCompatActivity implements ActivityCompat.On
                 FirebaseDatabase.getInstance().getReference().child("users")
                         .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).updateChildren(taskMap);
 
+                Map<String, Object> taskMap2 = new HashMap<String, Object>();
+                taskMap.put("startLatitude", currentLocation.getLatitude());
+                taskMap.put("startLongitude", currentLocation.getLongitude());
+                FirebaseDatabase.getInstance().getReference().child("users")
+                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).updateChildren(taskMap2);
             }
         }
 

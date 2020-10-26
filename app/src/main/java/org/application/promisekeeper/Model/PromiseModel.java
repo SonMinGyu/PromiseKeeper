@@ -9,10 +9,9 @@ public class PromiseModel {
     private String promiseDate;
     private String promisePlace;
     private String promiseStTime;
-    private double placeLatitude;
-    private double placeLongitude;
+    private double promisePlaceLatitude;
+    private double promisePlaceLongitude;
     private String promiseHostUid;
-
     public String getPromiseHostUid() {
         return promiseHostUid;
     }
@@ -29,20 +28,20 @@ public class PromiseModel {
         this.promiseStTime = promiseStTime;
     }
 
-    public double getPlaceLatitude() {
-        return placeLatitude;
+    public double getPromisePlaceLatitude() {
+        return promisePlaceLatitude;
     }
 
-    public void setPlaceLatitude(double placeLatitude) {
-        this.placeLatitude = placeLatitude;
+    public void setPromisePlaceLatitude(double promisePlaceLatitude) {
+        this.promisePlaceLatitude = promisePlaceLatitude;
     }
 
-    public double getPlaceLongitude() {
-        return placeLongitude;
+    public double getPromisePlaceLongitude() {
+        return promisePlaceLongitude;
     }
 
-    public void setPlaceLongitude(double placeLongitude) {
-        this.placeLongitude = placeLongitude;
+    public void setPromisePlaceLongitude(double promisePlaceLongitude) {
+        this.promisePlaceLongitude = promisePlaceLongitude;
     }
 
     public String getPromisePlace() {

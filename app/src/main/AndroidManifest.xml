@@ -12,8 +12,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".FindByMapActivity"></activity>
+        <activity android:name=".FindByAddressActivity"></activity>
+        <activity android:name=".FindCenterOfFriendsActivity" />
+        <activity android:name=".FindByMapActivity" />
         <activity android:name=".PromiseRoomActivity" />
         <activity
             android:name=".PromiseOfTheDayActivity"
@@ -24,7 +27,6 @@
         <activity
             android:name=".SearchFriend"
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar" />
-
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>

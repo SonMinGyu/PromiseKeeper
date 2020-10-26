@@ -67,7 +67,7 @@ import java.util.Map;
 import static org.application.promisekeeper.PromiseOfTheDayActivity.staticPromiseModel;
 
 
-public class MainActivity extends AppCompatActivity
+public class FindCenterOfFriendsActivity extends AppCompatActivity
         implements OnMapReadyCallback,
         ActivityCompat.OnRequestPermissionsResultCallback {
 
@@ -81,12 +81,12 @@ public class MainActivity extends AppCompatActivity
     private Marker currentMarker3 = null;
 
     private static final String TAG = "googlemap_example";
-    private static final int GPS_ENABLE_REQUEST_CODE = 2001;
-    private static final int UPDATE_INTERVAL_MS = 5000;  // 5초
-    private static final int FASTEST_UPDATE_INTERVAL_MS = 1000; // 1초
+    private static final int FCOFAGPS_ENABLE_REQUEST_CODE = 2001;
+    private static final int FCOFAUPDATE_INTERVAL_MS = 5000;  // 5초
+    private static final int FCOFAFASTEST_UPDATE_INTERVAL_MS = 1000; // 1초
 
     // onRequestPermissionsResult에서 수신된 결과에서 ActivityCompat.requestPermissions를 사용한 퍼미션 요청을 구별하기 위해 사용됩니다.
-    private static final int PERMISSIONS_REQUEST_CODE = 100;
+    private static final int FCOFAPERMISSIONS_REQUEST_CODE = 100;
     boolean needRequest = false;
 
     // 앱을 실행하기 위해 필요한 퍼미션을 정의합니다.
@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity
     private View mLayout;  // Snackbar 사용하기 위해서는 View가 필요합니다.
     // (참고로 Toast에서는 Context가 필요했습니다.)
 
-    public static final List<UserModel> userModels = bringUserName();
+    public static final List<UserModel> userModels2 = bringUserName2();
     int moveCount = 0;
 
     @Override
@@ -112,14 +112,12 @@ public class MainActivity extends AppCompatActivity
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
                 WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_find_center_of_friends);
 
-        mLayout = findViewById(R.id.main_mainLayout);
+        mLayout = findViewById(R.id.find_center_of_friends_mainLayout);
 
         locationRequest = new LocationRequest()
-                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                .setInterval(UPDATE_INTERVAL_MS)
-                .setFastestInterval(FASTEST_UPDATE_INTERVAL_MS);
+                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
 
         LocationSettingsRequest.Builder builder =
@@ -130,7 +128,7 @@ public class MainActivity extends AppCompatActivity
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.main_map);
+                .findFragmentById(R.id.find_center_of_friends_map);
         mapFragment.getMapAsync(this);
     }
 
@@ -173,8 +171,8 @@ public class MainActivity extends AppCompatActivity
                     @Override
                     public void onClick(View view) {
                         // 3-3. 사용자게에 퍼미션 요청을 합니다. 요청 결과는 onRequestPermissionResult에서 수신됩니다.
-                        ActivityCompat.requestPermissions( MainActivity.this, REQUIRED_PERMISSIONS,
-                                PERMISSIONS_REQUEST_CODE);
+                        ActivityCompat.requestPermissions( FindCenterOfFriendsActivity.this, REQUIRED_PERMISSIONS,
+                                FCOFAPERMISSIONS_REQUEST_CODE);
                     }
                 }).show();
 
@@ -182,15 +180,29 @@ public class MainActivity extends AppCompatActivity
                 // 4-1. 사용자가 퍼미션 거부를 한 적이 없는 경우에는 퍼미션 요청을 바로 합니다.
                 // 요청 결과는 onRequestPermissionResult에서 수신됩니다.
                 ActivityCompat.requestPermissions( this, REQUIRED_PERMISSIONS,
-                        PERMISSIONS_REQUEST_CODE);
+                        FCOFAPERMISSIONS_REQUEST_CODE);
             }
         }
 
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
 
+        mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+            @Override
+            public void onMapLongClick(LatLng latLng) {
+                Map<String, Object> taskMap = new HashMap<String, Object>();
+                taskMap.put("userLatitude", latLng.latitude);
+                taskMap.put("userLongitude", latLng.longitude);
+                FirebaseDatabase.getInstance().getReference().child("users")
+                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).updateChildren(taskMap);
+
+                Toast.makeText(getApplicationContext(), "약속 출발 위치가 변경되었습니다!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
+
 
                 Log.d( TAG, "onMapClick :");
             }
@@ -386,10 +398,10 @@ public class MainActivity extends AppCompatActivity
     public void setCurrentLocation(Location location, String markerTitle, String markerSnippet) {
         String name = null;
 
-        for(int i = 0; i < userModels.size(); i++) {
-            if (userModels.get(i).getUserUid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid()))
+        for(int i = 0; i < userModels2.size(); i++) {
+            if (userModels2.get(i).getUserUid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid()))
             {
-                name = userModels.get(i).getUserName();
+                name = userModels2.get(i).getUserName();
             }
         }
 
@@ -425,10 +437,10 @@ public class MainActivity extends AppCompatActivity
 
         String name = null;
 
-        for(int i = 0; i < userModels.size(); i++) {
-            if (userModels.get(i).getUserUid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid()))
+        for(int i = 0; i < userModels2.size(); i++) {
+            if (userModels2.get(i).getUserUid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid()))
             {
-                name = userModels.get(i).getUserName();
+                name = userModels2.get(i).getUserName();
             }
         }
 
@@ -456,7 +468,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void setfriendsLocation() {
-        // 현재 두명일때만 돌아가도록 함. 추후 약속(방) 인원에 따라 동적으로 바뀌도록 수정하자.
         final List<UserModel> mainUserModels = new ArrayList<>();
         final List<LocationDataModel> allLocationDataModels = new ArrayList<>();
         final List<LocationDataModel> locationDataModels = new ArrayList<>();
@@ -494,11 +505,11 @@ public class MainActivity extends AppCompatActivity
                         //System.out.println("mainmainmain mainUserModel" + mainUserModels.get(0).getLocationDataModel().getFriendUid());
 
                         for(int i = 0; i < staticPromiseModel.get(0).getMemberUids().size(); i++)
-                            // staticPromiseModel의 0번째에 현재 약속의 정보 들어있음
+                        // staticPromiseModel의 0번째에 현재 약속의 정보 들어있음
                         {
                             for(int j = 0; j < allLocationDataModels.size(); j++) {
                                 if (staticPromiseModel.get(0).getMemberUids().get(i).equals(allLocationDataModels.get(j).getUid()))
-                                        //&& !staticPromiseModel.get(0).getMemberUids().get(i).equals(FirebaseAuth.getInstance().getCurrentUser().getUid()))
+                                //&& !staticPromiseModel.get(0).getMemberUids().get(i).equals(FirebaseAuth.getInstance().getCurrentUser().getUid()))
                                 {
                                     locationDataModels.add(allLocationDataModels.get(j));
                                     // allLocationDataModels에는 모든 유저들 최근 위치 들어있음
@@ -507,16 +518,10 @@ public class MainActivity extends AppCompatActivity
                             }
                         }
 
-                        System.out.println("mainmainmain locationModel " + locationDataModels.get(0).getUid());
-                        System.out.println("mainmainmain locationModel " + locationDataModels.get(0).getLatitude());
-                        System.out.println("mainmainmain locationModel " + locationDataModels.get(0).getLongitude());
-                        System.out.println("mainmainmain locationModel " + locationDataModels.size());
-
-
                         if(locationDataModels.size() != 0)
                         {
                             mMap.clear();
-                            setPromiseLocation();
+                            calculateCenterOfFriends(locationDataModels);
 
                             // custom 마커
                             setCustomMarkerView();
@@ -532,9 +537,9 @@ public class MainActivity extends AppCompatActivity
                             for(int i = 0; i < locationDataModels.size(); i++) {
                                 //Marker NewMarker = null;
                                 String name = null;
-                                for (int j = 0; j < userModels.size(); j++) {
-                                    if (userModels.get(j).getUserUid().equals(locationDataModels.get(i).getUid())) {
-                                        name = userModels.get(j).getUserName();
+                                for (int j = 0; j < userModels2.size(); j++) {
+                                    if (userModels2.get(j).getUserUid().equals(locationDataModels.get(i).getUid())) {
+                                        name = userModels2.get(j).getUserName();
                                     }
                                 }
 
@@ -638,30 +643,36 @@ public class MainActivity extends AppCompatActivity
         //mMap.moveCamera(cameraUpdate);
     }
 
-    private void setPromiseLocation()
+    private void calculateCenterOfFriends(List<LocationDataModel> locationDataModels)
     {
-        if(staticPromiseModel.get(0).getPromisePlace().equals("아직 약속 장소를 정하지 않았습니다!"))
+        double centerLatitude = 0;
+        double centerLongitude = 0;
+
+        for(int i = 0; i < locationDataModels.size(); i++)
         {
-
+            centerLatitude += locationDataModels.get(i).getLatitude();
+            centerLongitude += locationDataModels.get(i).getLongitude();
         }
-        else {
-            LatLng DEFAULT_LOCATION = new LatLng(staticPromiseModel.get(0).getPromisePlaceLatitude(), staticPromiseModel.get(0).getPromisePlaceLongitude());
-            String markerTitle = getCurrentAddress(DEFAULT_LOCATION);
-            String markerSnippet = "위도:" + String.valueOf(DEFAULT_LOCATION.latitude)
-                    + " 경도:" + String.valueOf(DEFAULT_LOCATION.longitude);
-            //String markerTitle = "위치정보 가져올 수 없음";
-            //String markerSnippet = "위치 퍼미션과 GPS 활성 여부 확인하세요";
 
-            if (currentMarker3 != null) currentMarker3.remove();
+        centerLatitude = (centerLatitude / locationDataModels.size());
+        centerLongitude = (centerLongitude / locationDataModels.size());
 
-            MarkerOptions markerOptions = new MarkerOptions();
-            markerOptions.position(DEFAULT_LOCATION);
-            markerOptions.title(markerTitle);
-            markerOptions.snippet(markerSnippet);
-            markerOptions.draggable(true);
-            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-            currentMarker3 = mMap.addMarker(markerOptions);
-        }
+        LatLng DEFAULT_LOCATION = new LatLng(centerLatitude, centerLongitude);
+        String markerTitle = getCurrentAddress(DEFAULT_LOCATION);
+        String markerSnippet = "위도:" + String.valueOf(DEFAULT_LOCATION.latitude)
+                + " 경도:" + String.valueOf(DEFAULT_LOCATION.longitude);
+        //String markerTitle = "위치정보 가져올 수 없음";
+        //String markerSnippet = "위치 퍼미션과 GPS 활성 요부 확인하세요";
+
+        if (currentMarker3 != null) currentMarker3.remove();
+
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(DEFAULT_LOCATION);
+        markerOptions.title(markerTitle);
+        markerOptions.snippet(markerSnippet);
+        markerOptions.draggable(true);
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+        currentMarker3 = mMap.addMarker(markerOptions);
     }
 
     //여기부터는 런타임 퍼미션 처리을 위한 메소드들
@@ -688,7 +699,7 @@ public class MainActivity extends AppCompatActivity
                                            @NonNull String[] permissions,
                                            @NonNull int[] grandResults) {
 
-        if ( permsRequestCode == PERMISSIONS_REQUEST_CODE && grandResults.length == REQUIRED_PERMISSIONS.length) {
+        if ( permsRequestCode == FCOFAPERMISSIONS_REQUEST_CODE && grandResults.length == REQUIRED_PERMISSIONS.length) {
 
             // 요청 코드가 PERMISSIONS_REQUEST_CODE 이고, 요청한 퍼미션 개수만큼 수신되었다면
 
@@ -749,7 +760,7 @@ public class MainActivity extends AppCompatActivity
     //여기부터는 GPS 활성화를 위한 메소드들
     private void showDialogForLocationServiceSetting() {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(FindCenterOfFriendsActivity.this);
         builder.setTitle("위치 서비스 비활성화");
         builder.setMessage("앱을 사용하기 위해서는 위치 서비스가 필요합니다.\n"
                 + "위치 설정을 수정하실래요?");
@@ -759,7 +770,7 @@ public class MainActivity extends AppCompatActivity
             public void onClick(DialogInterface dialog, int id) {
                 Intent callGPSSettingIntent
                         = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                startActivityForResult(callGPSSettingIntent, GPS_ENABLE_REQUEST_CODE);
+                startActivityForResult(callGPSSettingIntent, FCOFAGPS_ENABLE_REQUEST_CODE);
             }
         });
         builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
@@ -777,7 +788,7 @@ public class MainActivity extends AppCompatActivity
 
         switch (requestCode) {
 
-            case GPS_ENABLE_REQUEST_CODE:
+            case FCOFAGPS_ENABLE_REQUEST_CODE:
 
                 //사용자가 GPS 활성 시켰는지 검사
                 if (checkLocationServicesStatus()) {
@@ -796,7 +807,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    public static ArrayList<UserModel> bringUserName()
+    public static ArrayList<UserModel> bringUserName2()
     {
         final ArrayList<UserModel> user = new ArrayList<>();
         FirebaseDatabase.getInstance().getReference().child("users").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -827,16 +838,14 @@ public class MainActivity extends AppCompatActivity
 
     private void getSampleMarkerItems(List<LocationDataModel> locationDataModels) {
 
-
-
         ArrayList<MarkerItem> sampleList = new ArrayList();
 
         for(int i = 0; i < locationDataModels.size(); i++) {
             String name = null;
 
-            for (int j = 0; j < userModels.size(); j++) {
-                if (userModels.get(j).getUserUid().equals(locationDataModels.get(i).getUid())) {
-                    name = userModels.get(j).getUserName();
+            for (int j = 0; j < userModels2.size(); j++) {
+                if (userModels2.get(j).getUserUid().equals(locationDataModels.get(i).getUid())) {
+                    name = userModels2.get(j).getUserName();
                 }
             }
             sampleList.add(new MarkerItem(locationDataModels.get(i).getLatitude(), locationDataModels.get(i).getLongitude(), name));
@@ -849,7 +858,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     private Marker addMarker(MarkerItem markerItem, boolean isSelectedMarker) {
-
 
         LatLng position = new LatLng(markerItem.getLat(), markerItem.getLon());
         String formatted = markerItem.getName();

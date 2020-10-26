@@ -166,6 +166,7 @@ public class PromiseOfTheDayActivity extends Activity {
                                 String promiseTitle = theDayPromiseModels.get(position).getPromiseTitle();
                                 String promisePlace = theDayPromiseModels.get(position).getPromisePlace();
                                 String promiseDate = theDayPromiseModels.get(position).getPromiseDate();
+                                staticPromiseModel = bringPromiseMidel(promiseDate, promiseTitle);
                                 ArrayList<String> memberUid = theDayPromiseModels.get(position).getMemberUids();
                                 //System.out.println("mainmainmain click " + memberUid.get(0));
                                 Intent promiseRoomIntent = new Intent(PromiseOfTheDayActivity.this, PromiseRoomActivity.class);

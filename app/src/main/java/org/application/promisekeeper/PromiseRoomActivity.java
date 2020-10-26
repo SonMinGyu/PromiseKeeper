@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import fragment.findPlaceFragment;
-import fragment.friendsFragment;
 
 public class PromiseRoomActivity extends AppCompatActivity {
 
@@ -90,4 +89,6 @@ public class PromiseRoomActivity extends AppCompatActivity {
 
         return stDate;
     }
+
+
 }
