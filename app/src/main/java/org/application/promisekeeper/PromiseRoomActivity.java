@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import fragment.chattingFragment;
 import fragment.findPlaceFragment;
 
 public class PromiseRoomActivity extends AppCompatActivity {
@@ -62,6 +63,24 @@ public class PromiseRoomActivity extends AppCompatActivity {
                         }
 
                     case R.id.promise_room_bottomnavigation_chat:
+
+                        Bundle bundle2 = new Bundle();
+                        bundle2.putString("promiseDate", getIntent().getExtras().getString("promiseDate"));
+                        bundle2.putString("promiseTitle", getIntent().getExtras().getString("promiseTitle"));
+                        bundle2.putString("promisePlace", getIntent().getExtras().getString("promisePlace"));
+                        bundle2.putStringArrayList("memberUid", getIntent().getExtras().getStringArrayList("memberUid"));
+                        chattingFragment fp2 = new chattingFragment();
+                        fp2.setArguments(bundle2);
+
+                        Fragment promiseRoomFragment2 = getSupportFragmentManager().findFragmentById(R.id.promise_room_framLayout);
+                        if(promiseRoomFragment2 instanceof chattingFragment) {
+                            return true;
+                        }
+                        else {
+                            getSupportFragmentManager().beginTransaction().replace(R.id.promise_room_framLayout,  fp2).commit();
+                            return true;
+                        }
+
 
                         /*
                         Fragment promiseFragment = getSupportFragmentManager().findFragmentById(R.id.mainFragment_framLayout);

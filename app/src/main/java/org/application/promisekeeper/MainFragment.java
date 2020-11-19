@@ -44,6 +44,7 @@ import java.util.List;
 import java.util.Map;
 
 import fragment.friendsFragment;
+import fragment.myInfoFragment;
 import fragment.promiseFragment;
 
 public class MainFragment extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback{
@@ -140,18 +141,16 @@ public class MainFragment extends AppCompatActivity implements ActivityCompat.On
                         }
 
                     case R.id.bottomNavigation_MyInformation:
-                        /*
-                        Fragment setupFragment = getSupportFragmentManager().findFragmentById(R.id.mainFragment_framLayout);
-                        if(setupFragment instanceof setupFragment) {
+                        Fragment myInfoFragment = getSupportFragmentManager().findFragmentById(R.id.mainFragment_framLayout);
+                        if(myInfoFragment instanceof fragment.myInfoFragment) {
                             return true;
                         }
                         else {
-                            getSupportFragmentManager().beginTransaction().replace(R.id.mainFragment_framLayout, new setupFragment()).commit();
-                            menuTitleText.setText("설정");
+                            getSupportFragmentManager().beginTransaction().replace(R.id.mainFragment_framLayout, new myInfoFragment()).commit();
+                            menuTitleText.setText("MyInfo");
                             return true;
                         }
 
-                         */
                 }
 
                 return false;
